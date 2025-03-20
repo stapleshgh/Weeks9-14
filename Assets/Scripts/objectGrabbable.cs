@@ -8,19 +8,14 @@ using System.Security.Cryptography;
 
 public class objectGrabbable : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandler
 {
-    Transform dragParent;
+    
 
-    void Update()
-    {
-        transform.position = new Vector3(transform.position.x, transform.position.y, 0);
-    }
+    
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        dragParent = transform.parent;
-        transform.SetParent(transform.root);
-        transform.SetAsLastSibling();
-        Debug.Log("Star drag");
+        
+        Debug.Log("Start drag");
     }
 
     public void OnEndDrag(PointerEventData eventData)
@@ -30,8 +25,8 @@ public class objectGrabbable : MonoBehaviour, IBeginDragHandler, IEndDragHandler
 
     public void OnDrag(PointerEventData eventData)
     {
-        transform.position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        transform.SetParent(dragParent);
+        transform.position = new Vector2(Camera.main.ScreenToWorldPoint(Input.mousePosition).x, Camera.main.ScreenToWorldPoint(Input.mousePosition).y);
+        
         
     }
 
