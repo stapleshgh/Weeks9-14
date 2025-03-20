@@ -15,6 +15,8 @@ public class KitClock : MonoBehaviour
 
     public UnityEvent OnTheHour;
 
+    public AudioSource chime;
+
     Coroutine ClockCoroutine;
 
     void Start()
@@ -45,5 +47,15 @@ public class KitClock : MonoBehaviour
 
         }
         OnTheHour.Invoke();
+        hour++;
+    }
+
+    private IEnumerator PlayChime()
+    {
+        while (true)
+        {
+            chime.Play();
+            yield return null;
+        }
     }
 }

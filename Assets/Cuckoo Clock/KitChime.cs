@@ -4,8 +4,12 @@ using UnityEngine;
 
 public class KitChime : MonoBehaviour
 {
+    public AudioSource chime;
     public void Chime()
     {
-        Debug.Log("Chiming !");
+        if (chime != null && !chime.isPlaying)
+        {
+            chime.Play();
+        }
     }
 }

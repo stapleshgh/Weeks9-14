@@ -242,6 +242,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  chime: {fileID: 0}
 --- !u!1 &239713388
 GameObject:
   m_ObjectHideFlags: 0
@@ -401,7 +402,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 4fd926af1e936314c9de00ec09b1bb7e, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -499,6 +500,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23e9cd962dc5279409058d819f27f0c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  chime: {fileID: 860762274}
 --- !u!1 &1230641175
 GameObject:
   m_ObjectHideFlags: 0
