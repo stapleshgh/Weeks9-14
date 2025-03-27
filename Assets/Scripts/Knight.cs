@@ -8,6 +8,8 @@ public class Knight : MonoBehaviour
 {
     SpriteRenderer sr;
     Animator animator;
+    public AudioSource audioSource;
+    public AudioClip[] footsteps;
 
     int speed = 5;
 
@@ -33,11 +35,12 @@ public class Knight : MonoBehaviour
             canRun = false;
         }
 
+        animator.SetFloat("movement", Mathf.Abs(direction));
 
-        if (canRun && direction != 0)
+        if (canRun)
         {
             transform.position += transform.right * direction * speed * Time.deltaTime;
-            animator.SetFloat("movement", Mathf.Abs(direction));
+            
         }
         
         
@@ -46,5 +49,18 @@ public class Knight : MonoBehaviour
     public void AttackHasFinished()
     {
         canRun = true;
+    }
+
+    public void PlayFoostep()
+    {
+        int footstep = Random.Range(0, footsteps.Length);
+
+        if (audioSource.isPlaying == false)
+        {
+            audioSource.clip = footsteps[footstep];
+            audioSource.Play();
+
+        }
+        
     }
 }
