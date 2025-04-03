@@ -1,8 +1,10 @@
+using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Knight : MonoBehaviour
 {
@@ -11,6 +13,10 @@ public class Knight : MonoBehaviour
     public AudioSource audioSource;
     public AudioClip[] footsteps;
 
+    private CinemachineImpulseSource impulse;
+
+    [SerializeField] private UnityEvent stomp;
+
     int speed = 5;
 
     public bool canRun = true;
@@ -18,6 +24,7 @@ public class Knight : MonoBehaviour
     void Start()
     {
         sr = GetComponent<SpriteRenderer>();
+
         animator = GetComponent<Animator>(); 
     }
 
@@ -59,6 +66,7 @@ public class Knight : MonoBehaviour
         {
             audioSource.clip = footsteps[footstep];
             audioSource.Play();
+            stomp.Invoke();
 
         }
         
