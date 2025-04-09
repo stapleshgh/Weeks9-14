@@ -9,7 +9,7 @@ public class PhysicsBuffer : MonoBehaviour
 
     GameObject[] physicsObjects = null;
 
-    [SerializeField] UnityEvent<GameObject> onCollisionDetected = new UnityEvent<GameObject>();
+    [SerializeField] UnityEvent<GameObject, GameObject> onCollisionDetected = new UnityEvent<GameObject, GameObject>();
 
     void Start()
     {
@@ -47,7 +47,7 @@ public class PhysicsBuffer : MonoBehaviour
                 s1.name != s2.name)
             {
                 Debug.Log("colliding");
-                onCollisionDetected.Invoke(s1);
+                onCollisionDetected.Invoke(s1, s2);
             } else
             {
                 
