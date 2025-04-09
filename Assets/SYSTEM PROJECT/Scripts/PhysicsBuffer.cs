@@ -17,8 +17,9 @@ public class PhysicsBuffer : MonoBehaviour
 
         foreach (var po in physicsObjects)
         {
-            //physicsObject script = po.GetComponent<physicsObject>();
-            //onCollisionDetected.AddListener(script.onCollision);
+
+            physicsObject script = po.GetComponent<physicsObject>();
+            onCollisionDetected.AddListener(script.onCollision);
         }
     }
 
