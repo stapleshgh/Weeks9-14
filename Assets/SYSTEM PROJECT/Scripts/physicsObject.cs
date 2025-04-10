@@ -4,12 +4,15 @@ using System.Security.Cryptography;
 using UnityEditor.SearchService;
 using UnityEngine;
 using UnityEngine.UIElements;
+using static UnityEngine.RuleTile.TilingRuleOutput;
 
 public class physicsObject : MonoBehaviour
 {
     public bool isFalling = true;
 
     public Vector2 velocity;
+
+    public Sprite sprite;
 
     public bool isFloor;
     void Start()
@@ -28,52 +31,82 @@ public class physicsObject : MonoBehaviour
             velocity.y = 0;
         }
 
-        //decay
-        if (velocity.x > 0)
-        {
-            velocity.x -= 0.5f * Time.deltaTime;
-        } else if (velocity.x < 0)
-        {
-            velocity.x += 0.5f * Time.deltaTime;
-        }
-        
 
+        //if the object is marked as static, it stays in place
         if (isFloor)
         {
             velocity.x = 0;
             velocity.y = 0;
         }
 
+        //decay
+        velocity = Vector2.Lerp(velocity, new Vector2(0, velocity.y), Time.deltaTime * 4);
+
+        //applying the velocity to the position
         transform.position = new Vector2(transform.position.x + velocity.x, transform.position.y + velocity.y);
         
-        
+        if (transform.position.x > 9)
+        {
+            transform.position = new Vector2(9, transform.position.y + velocity.y);
+        }
+
+        checkBounds();
     }
 
 
-    public void onCollision(GameObject s1, GameObject s2)
+    public void onCollision(physicsObject s1, physicsObject s2)
     {
-        //if the collided object is me, stop falling
-        if (s1 == gameObject)
+        //if the collided object is me, pay attention
+        if (s1.gameObject == gameObject)
         {
             if (s2.name == "floor")
             {
                 isFalling = false;
             } else
             {
-                physicsObject script = s2.GetComponent<physicsObject>();
-                velocity.x += script.velocity.x;
-                velocity.y += script.velocity.y;
+                // if x is greater, apply positive repulsion. if x is lower, apply negative repulsion
+                if (s1.transform.position.x > s2.transform.position.x)
+                {
+                    s1.transform.position = new Vector2(s2.transform.position.x + s2.transform.localScale.x, s1.transform.position.y);
+                    
+                } else if (s1.transform.position.x < s2.transform.position.x)
+                {
+                    s1.transform.position = new Vector2(s2.transform.position.x - s2.transform.localScale.x, s1.transform.position.y);
+                }
+
+                
+
+                
             }
             
-
+            
         }
+        
         
     }
 
-    IEnumerator generateImpulse()
+    public void generateImpulse(float powerX, float powerY)
     {
-        velocity.y = 2;
-        yield return Time.deltaTime;
-        velocity.y = 0;
+        velocity.x = powerX;
+        velocity.y = powerY;
+        
+    }
+
+    public void checkBounds()
+    {
+        if ( transform.position.x > Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, 0, 0)).x)
+        {
+            transform.position = new Vector2(Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, 0, 0)).x, transform.position.y);
+        }
+        if (transform.position.x < Camera.main.ScreenToWorldPoint(new Vector3(0, 0, 0)).x)
+        {
+            transform.position = new Vector2(Camera.main.ScreenToWorldPoint(new Vector3(0, 0, 0)).x, transform.position.y);
+        }
+
+        if (transform.position.y < Camera.main.ScreenToWorldPoint(new Vector3(0, 0, 0)).y)
+        {
+            transform.position = new Vector2(transform.position.x, Camera.main.ScreenToWorldPoint(new Vector3(0, 0, 0)).y + transform.localScale.y / 2);
+            isFalling = false;
+        }
     }
 }

@@ -7,19 +7,19 @@ public class PhysicsBuffer : MonoBehaviour
 {
     // Start is called before the first frame update
 
-    GameObject[] physicsObjects = null;
+    physicsObject[] physicsObjects = null;
 
-    [SerializeField] UnityEvent<GameObject, GameObject> onCollisionDetected = new UnityEvent<GameObject, GameObject>();
+    [SerializeField] UnityEvent<physicsObject, physicsObject> onCollisionDetected = new UnityEvent<physicsObject, physicsObject>();
 
     void Start()
     {
-        physicsObjects = GameObject.FindGameObjectsWithTag("physicsObject");
+        physicsObjects = GetComponentsInChildren<physicsObject>();
 
-        foreach (var po in physicsObjects)
+        foreach (var child in physicsObjects)
         {
 
-            physicsObject script = po.GetComponent<physicsObject>();
-            onCollisionDetected.AddListener(script.onCollision);
+            
+            onCollisionDetected.AddListener(child.onCollision);
         }
     }
 
@@ -36,9 +36,9 @@ public class PhysicsBuffer : MonoBehaviour
         }
     }
 
-    void checkCollision(GameObject s1)
+    void checkCollision(physicsObject s1)
     {
-        foreach (GameObject s2 in physicsObjects)
+        foreach (physicsObject s2 in physicsObjects)
         {
             if (s1.transform.localPosition.x + (s1.transform.localScale.x / 2) > s2.transform.localPosition.x - (s2.transform.localScale.x / 2) &&     // r1 right edge past r2 left
                 s1.transform.localPosition.x - (s1.transform.localScale.x / 2) < s2.transform.localPosition.x + (s2.transform.localScale.x / 2) &&
