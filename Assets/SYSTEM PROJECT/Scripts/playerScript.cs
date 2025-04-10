@@ -9,6 +9,8 @@ public class playerScript : MonoBehaviour
     public Vector2 velocity;
 
     public physicsObject pScript;
+
+    public Animator animator;
     // Start is called before the first frame update
     void Start()
     {
@@ -35,12 +37,13 @@ public class playerScript : MonoBehaviour
             
         }
 
+        if (Input.GetMouseButtonDown(0)) { 
+            animator.Play("punch");
+        }
+
         
 
     }
 
-    IEnumerator punch()
-    {
-
-    }
+    
 }

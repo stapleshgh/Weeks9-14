@@ -805,6 +805,7 @@ GameObject:
   - component: {fileID: 1170516650}
   - component: {fileID: 1170516649}
   - component: {fileID: 1170516652}
+  - component: {fileID: 1170516653}
   m_Layer: 0
   m_Name: player
   m_TagString: physicsObject
@@ -910,6 +911,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   velocity: {x: 0, y: 0}
   pScript: {fileID: 1170516649}
+  animator: {fileID: 1170516653}
+--- !u!95 &1170516653
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1170516648}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: bd846b54ae4d595409102be58b416594, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1643378043
 GameObject:
   m_ObjectHideFlags: 3
