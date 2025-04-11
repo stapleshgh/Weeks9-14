@@ -67,11 +67,11 @@ public class physicsObject : MonoBehaviour
                 // if x is greater, apply positive repulsion. if x is lower, apply negative repulsion
                 if (s1.transform.position.x > s2.transform.position.x)
                 {
-                    s1.transform.position = new Vector2(s2.transform.position.x + s2.transform.localScale.x, s1.transform.position.y);
+                    s1.transform.position = new Vector2(s2.transform.position.x + Mathf.Abs(s2.transform.localScale.x), s1.transform.position.y);
                     
                 } else if (s1.transform.position.x < s2.transform.position.x)
                 {
-                    s1.transform.position = new Vector2(s2.transform.position.x - s2.transform.localScale.x, s1.transform.position.y);
+                    s1.transform.position = new Vector2(s2.transform.position.x - Mathf.Abs(s2.transform.localScale.x), s1.transform.position.y);
                 }
 
                 

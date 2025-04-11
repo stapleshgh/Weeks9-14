@@ -49,12 +49,12 @@ public class playerScript : MonoBehaviour
     {
         if (Camera.main.ScreenToWorldPoint(Input.mousePosition).x > transform.position.x)
         {
-            transform.localScale = new Vector2(1, 1);
+            transform.localScale = new Vector2(2, 2);
 
         }
         else if(Camera.main.ScreenToWorldPoint(Input.mousePosition).x < transform.position.x)
         {
-            transform.localScale = new Vector2(-1, 1);
+            transform.localScale = new Vector2(-2, 2);
         }
     }
 

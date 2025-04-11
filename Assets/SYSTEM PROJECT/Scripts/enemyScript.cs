@@ -9,10 +9,16 @@ public class enemyScript : MonoBehaviour
 
     public bool invincible = false;
 
+
+
+    public Animator animator;
+
+
+    Coroutine idlem;
     // Start is called before the first frame update
     void Start()
     {
-        
+        idlem = StartCoroutine(idleMovement());
     }
 
     // Update is called once per frame
@@ -25,6 +31,7 @@ public class enemyScript : MonoBehaviour
     {
         if (target.gameObject == gameObject)
         {
+            StartCoroutine(invincibilityCoroutine());
             //if hurtbox is to the left, apply impulse to the right, and vice versa
             if (source.transform.position.x > target.transform.position.x)
             {
@@ -36,6 +43,46 @@ public class enemyScript : MonoBehaviour
                 pScript.isFalling = true;
             }
            
+        }
+        
+    }
+
+    IEnumerator idleMovementLeft()
+    {
+        pScript.velocity.x = -0.01f;
+        yield return new WaitForSeconds(2);
+    }
+
+    IEnumerator idleMovementRight()
+    {
+        pScript.velocity.x = 0.01f;
+        yield return new WaitForSeconds(2);
+    }
+
+    IEnumerator idleMovement()
+    {
+        while (true)
+        {
+            animator.Play("idleEnemy");
+            var left = StartCoroutine(idleMovementLeft());
+            yield return left;
+            var right = StartCoroutine(idleMovementRight());
+            yield return right;
+        }
+        
+    }
+
+    IEnumerator invincibilityCoroutine()
+    {
+        if (!invincible)
+        {
+            
+            animator.Play("jump");
+            StopCoroutine(idlem);
+            yield return new WaitForSeconds(3);
+            idlem = StartCoroutine(idleMovement());
+           
+
         }
         
     }

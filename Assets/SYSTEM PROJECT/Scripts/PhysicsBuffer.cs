@@ -90,13 +90,9 @@ public class PhysicsBuffer : MonoBehaviour
     {
         if (!e.invincible)
         {
-            onHurtboxEntered.RemoveListener(e.onEnemyHurt);
-            Debug.Log("starting");
-            e.invincible = true;
-            yield return new WaitForSeconds(5);
+            onHurtboxEntered.RemoveListener(e.onEnemyHurt); 
+            yield return new WaitForSeconds(3);
             onHurtboxEntered.AddListener(e.onEnemyHurt);
-            Debug.Log("finished");
-            e.invincible = false;
         }
         
     }
