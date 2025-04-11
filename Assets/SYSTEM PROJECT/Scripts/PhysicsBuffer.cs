@@ -58,10 +58,10 @@ public class PhysicsBuffer : MonoBehaviour
     {
         foreach (physicsObject s2 in physicsObjects)
         {
-            if (s1.transform.localPosition.x + (s1.transform.localScale.x / 2) > s2.transform.localPosition.x - (s2.transform.localScale.x / 2) &&     // r1 right edge past r2 left
-                s1.transform.localPosition.x - (s1.transform.localScale.x / 2) < s2.transform.localPosition.x + (s2.transform.localScale.x / 2) &&
-                s1.transform.localPosition.y + (s1.transform.localScale.y / 2) >= s2.transform.localPosition.y - (s2.transform.localScale.y/ 2) &&
-                s1.transform.localPosition.y - (s1.transform.localScale.y / 2) <= s2.transform.localPosition.y + (s2.transform.localScale.y / 2) && 
+            if (s1.transform.localPosition.x + (Mathf.Abs(s1.transform.localScale.x) / 2) > s2.transform.localPosition.x - (Mathf.Abs(s2.transform.localScale.x) / 2) &&     // r1 right edge past r2 left
+                s1.transform.localPosition.x - (Mathf.Abs(s1.transform.localScale.x) / 2) < s2.transform.localPosition.x + (Mathf.Abs(s2.transform.localScale.x) / 2) &&
+                s1.transform.localPosition.y + (Mathf.Abs(s1.transform.localScale.y) / 2) >= s2.transform.localPosition.y - (Mathf.Abs(s2.transform.localScale.y) / 2) &&
+                s1.transform.localPosition.y - (Mathf.Abs(s1.transform.localScale.y) / 2) <= s2.transform.localPosition.y + (Mathf.Abs(s2.transform.localScale.y) / 2) && 
                 s1.name != s2.name)
             {
                 onCollisionDetected.Invoke(s1, s2);
@@ -81,7 +81,23 @@ public class PhysicsBuffer : MonoBehaviour
                 s1.name != s2.name)
             {
                 onHurtboxEntered.Invoke(s2, s1);
+                StartCoroutine(invincibility(s2));
             }
         }
+    }
+
+    IEnumerator invincibility(enemyScript e)
+    {
+        if (!e.invincible)
+        {
+            onHurtboxEntered.RemoveListener(e.onEnemyHurt);
+            Debug.Log("starting");
+            e.invincible = true;
+            yield return new WaitForSeconds(5);
+            onHurtboxEntered.AddListener(e.onEnemyHurt);
+            Debug.Log("finished");
+            e.invincible = false;
+        }
+        
     }
 }

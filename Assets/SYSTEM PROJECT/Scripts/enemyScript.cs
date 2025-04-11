@@ -7,6 +7,8 @@ public class enemyScript : MonoBehaviour
 
     [SerializeField] physicsObject pScript;
 
+    public bool invincible = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -26,10 +28,12 @@ public class enemyScript : MonoBehaviour
             //if hurtbox is to the left, apply impulse to the right, and vice versa
             if (source.transform.position.x > target.transform.position.x)
             {
+                pScript.isFalling = true;
                 pScript.generateImpulse(-0.01f, 0.03f);
             } else
             {
                 pScript.generateImpulse(0.01f, 0.03f);
+                pScript.isFalling = true;
             }
            
         }
