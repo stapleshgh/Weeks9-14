@@ -22,10 +22,10 @@ public class playerScript : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.D))
         {
-            pScript.velocity.x = 10f * Time.deltaTime; ;
+            pScript.velocity.x = 0.01f; 
         } else if (Input.GetKey(KeyCode.A))
         {
-            pScript.velocity.x = -10f * Time.deltaTime; ;
+            pScript.velocity.x = -0.01f; 
         } 
         
 
@@ -41,8 +41,21 @@ public class playerScript : MonoBehaviour
             animator.Play("punch");
         }
 
-        
+        faceMouse();
 
+    }
+
+    void faceMouse()
+    {
+        if (Camera.main.ScreenToWorldPoint(Input.mousePosition).x > transform.position.x)
+        {
+            transform.localScale = new Vector2(1, 1);
+
+        }
+        else if(Camera.main.ScreenToWorldPoint(Input.mousePosition).x < transform.position.x)
+        {
+            transform.localScale = new Vector2(-1, 1);
+        }
     }
 
     
