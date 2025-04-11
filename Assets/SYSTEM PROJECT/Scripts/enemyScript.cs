@@ -11,6 +11,8 @@ public class enemyScript : MonoBehaviour
 
 
 
+
+
     public Animator animator;
 
 
@@ -29,8 +31,9 @@ public class enemyScript : MonoBehaviour
 
     public void onEnemyHurt(enemyScript target, hurtBox source)
     {
-        if (target.gameObject == gameObject)
+        if (target.gameObject == gameObject && !invincible)
         {
+            //StopCoroutine(invincibilityCoroutine());
             StartCoroutine(invincibilityCoroutine());
             //if hurtbox is to the left, apply impulse to the right, and vice versa
             if (source.transform.position.x > target.transform.position.x)
@@ -44,6 +47,7 @@ public class enemyScript : MonoBehaviour
             }
            
         }
+        
         
     }
 
@@ -64,10 +68,13 @@ public class enemyScript : MonoBehaviour
         while (true)
         {
             animator.Play("idleEnemy");
+            //StopCoroutine(idleMovementLeft());
             var left = StartCoroutine(idleMovementLeft());
             yield return left;
+            //StopCoroutine(idleMovementRight());
             var right = StartCoroutine(idleMovementRight());
             yield return right;
+            
         }
         
     }
@@ -76,11 +83,16 @@ public class enemyScript : MonoBehaviour
     {
         if (!invincible)
         {
-            
-            animator.Play("jump");
+            invincible = true;
+
             StopCoroutine(idlem);
+            animator.Play("jump");
+            
             yield return new WaitForSeconds(3);
+            //StopCoroutine(idleMovement());
             idlem = StartCoroutine(idleMovement());
+
+            invincible = false;
            
 
         }

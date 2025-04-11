@@ -80,7 +80,8 @@ public class PhysicsBuffer : MonoBehaviour
                 s1.transform.position.y - (s1.transform.localScale.y / 2) <= s2.transform.position.y + (s2.transform.localScale.y / 2) &&
                 s1.name != s2.name)
             {
-                onHurtboxEntered.Invoke(s2, s1);
+                 onHurtboxEntered.Invoke(s2, s1);
+                //StopCoroutine(invincibility(s2));
                 StartCoroutine(invincibility(s2));
             }
         }
@@ -88,11 +89,16 @@ public class PhysicsBuffer : MonoBehaviour
 
     IEnumerator invincibility(enemyScript e)
     {
+        
         if (!e.invincible)
         {
             onHurtboxEntered.RemoveListener(e.onEnemyHurt); 
+            e.invincible = true;
             yield return new WaitForSeconds(3);
             onHurtboxEntered.AddListener(e.onEnemyHurt);
+            e.invincible = false;
+            Debug.Log(e.invincible);
+            yield return null;
         }
         
     }
