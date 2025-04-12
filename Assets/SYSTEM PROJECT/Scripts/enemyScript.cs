@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class enemyScript : MonoBehaviour
 {
@@ -10,7 +11,8 @@ public class enemyScript : MonoBehaviour
     public bool invincible = false;
 
 
-
+    public UnityEvent<enemyScript> unSubFromDamageEvent = new UnityEvent<enemyScript>();
+    public  UnityEvent<enemyScript> SubToDamageEvent = new UnityEvent<enemyScript>();
 
 
     public Animator animator;
@@ -33,8 +35,8 @@ public class enemyScript : MonoBehaviour
     {
         if (target.gameObject == gameObject && !invincible)
         {
-            //StopCoroutine(invincibilityCoroutine());
             StartCoroutine(invincibilityCoroutine());
+
             //if hurtbox is to the left, apply impulse to the right, and vice versa
             if (source.transform.position.x > target.transform.position.x)
             {
@@ -84,12 +86,12 @@ public class enemyScript : MonoBehaviour
         if (!invincible)
         {
             invincible = true;
-
+            unSubFromDamageEvent.Invoke(this);
             StopCoroutine(idlem);
             animator.Play("jump");
             
             yield return new WaitForSeconds(3);
-            //StopCoroutine(idleMovement());
+            SubToDamageEvent.Invoke(this);  
             idlem = StartCoroutine(idleMovement());
 
             invincible = false;

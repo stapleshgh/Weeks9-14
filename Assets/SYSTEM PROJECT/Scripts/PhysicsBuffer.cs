@@ -17,6 +17,7 @@ public class PhysicsBuffer : MonoBehaviour
     [SerializeField] UnityEvent<enemyScript, hurtBox> onHurtboxEntered = new UnityEvent<enemyScript, hurtBox>();
     
 
+
     void Start()
     {
         physicsObjects = GetComponentsInChildren<physicsObject>();
@@ -31,6 +32,8 @@ public class PhysicsBuffer : MonoBehaviour
         foreach (var child in enemyScripts)
         {
             onHurtboxEntered.AddListener(child.onEnemyHurt);
+            child.unSubFromDamageEvent.AddListener(unsub);
+            child.SubToDamageEvent.AddListener(sub);
         }
 
         
@@ -80,26 +83,22 @@ public class PhysicsBuffer : MonoBehaviour
                 s1.transform.position.y - (s1.transform.localScale.y / 2) <= s2.transform.position.y + (s2.transform.localScale.y / 2) &&
                 s1.name != s2.name)
             {
-                 onHurtboxEntered.Invoke(s2, s1);
-                //StopCoroutine(invincibility(s2));
-                StartCoroutine(invincibility(s2));
+                onHurtboxEntered.Invoke(s2, s1);
+                //StartCoroutine(invincibility(s2));
             }
         }
     }
 
-    IEnumerator invincibility(enemyScript e)
+    
+
+    public void unsub(enemyScript e)
     {
-        
-        if (!e.invincible)
-        {
-            onHurtboxEntered.RemoveListener(e.onEnemyHurt); 
-            e.invincible = true;
-            yield return new WaitForSeconds(3);
-            onHurtboxEntered.AddListener(e.onEnemyHurt);
-            e.invincible = false;
-            Debug.Log(e.invincible);
-            yield return null;
-        }
-        
+        onHurtboxEntered.RemoveListener(e.onEnemyHurt);
+
+    }
+
+    public void sub(enemyScript e)
+    {
+        onHurtboxEntered.AddListener(e.onEnemyHurt);
     }
 }
