@@ -41,10 +41,10 @@ public class enemyScript : MonoBehaviour
             if (source.transform.position.x > target.transform.position.x)
             {
                 pScript.isFalling = true;
-                pScript.generateImpulse(-0.01f, 0.03f);
+                pScript.generateImpulse(-0.1f, 0.1f);
             } else
             {
-                pScript.generateImpulse(0.01f, 0.03f);
+                pScript.generateImpulse(0.1f, 0.1f);
                 pScript.isFalling = true;
             }
            

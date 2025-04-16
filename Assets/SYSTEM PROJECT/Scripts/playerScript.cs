@@ -22,10 +22,10 @@ public class playerScript : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.D))
         {
-            pScript.velocity.x = 0.01f; 
+            pScript.velocity.x = 0.1f; 
         } else if (Input.GetKey(KeyCode.A))
         {
-            pScript.velocity.x = -0.01f; 
+            pScript.velocity.x = -0.1f; 
         } 
         
 
@@ -33,7 +33,7 @@ public class playerScript : MonoBehaviour
         {
             pScript.isFalling = true;
             transform.position = new Vector2(transform.position.x, transform.position.y + 0.5f);
-            pScript.generateImpulse(pScript.velocity.x, 0.03f);
+            pScript.generateImpulse(pScript.velocity.x, 0.1f);
             
         }
 
